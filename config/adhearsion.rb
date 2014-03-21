@@ -41,3 +41,5 @@ Adhearsion.config do |config|
   config.punchblock.username = ENV['PUNCHBLOCK_USERNAME'] || 'usera@freeswitch.local-dev.mojolingo.com'
   config.punchblock.password = ENV['PUNCHBLOCK_PASSWORD'] || '1'
 end
+
+Dir[File.dirname(__FILE__) + '/initializers/**/*.rb'].each { |f| require f }

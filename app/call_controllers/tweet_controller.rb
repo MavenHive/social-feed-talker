@@ -2,7 +2,18 @@
 
 class TweetController < Adhearsion::CallController
   def run
-    play 'Tweet! Tweet!'
+    mentions = TwitterMentions.new
+    while true
+      mention = mentions.next_unread
+      break unless mention
+      play mention.text
+      pause
+    end
+    play 'Goodbye'
     hangup
+  end
+
+  def pause
+    sleep(1)
   end
 end

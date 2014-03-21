@@ -2,6 +2,7 @@
 
 class RouteController < Adhearsion::CallController
   def run
+    answer
     play_menu
   end
 
