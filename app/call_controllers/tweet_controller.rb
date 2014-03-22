@@ -5,8 +5,7 @@ class TweetController < Adhearsion::CallController
     mentions = TwitterMentions.new
     while true
       mention = mentions.next_unread
-      break unless mention
-      play mention.text
+      play mention.text if mention
       pause
     end
     play 'Goodbye'

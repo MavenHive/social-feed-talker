@@ -1,7 +1,9 @@
 class TwitterMentions
   LAST_READ_TWEET_ID_FILE = '/tmp/last_read_tweet_id'
 
-  @mentions = []
+  def initialize
+    @mentions = []
+  end
 
   def last_read_tweet_id
     File.exist?(LAST_READ_TWEET_ID_FILE) ? File.open(LAST_READ_TWEET_ID_FILE).read.to_i : 0
@@ -13,8 +15,9 @@ class TwitterMentions
 
   def next_unread
     last_read_id = self.last_read_tweet_id
-    @mentions = TWITTER.mentions_timeline unless @mentions
-    unread_tweet = @mentions.reject { |tweet| tweet.id <= last_read_id }.last
+    @mentions = TWITTER.mentions_timeline if @mentions.empty?
+    @mentions.reject! { |tweet| tweet.id <= last_read_id }
+    unread_tweet = @mentions.last
     self.last_read_tweet_id = unread_tweet.id if unread_tweet
     unread_tweet
   end
